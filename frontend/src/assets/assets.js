@@ -76,6 +76,9 @@ import vastrika from './vastrika.png'
 import herologo from './herologo.png'
 import admin from './admin.jpg'
 import vastrikaoutlet from "./vastrikaoutlet.png"
+import hero2 from "./hero_img2.png"
+import hero3 from "./hero_img3.png"
+import hero4 from "./hero_img4.png"
 
 export const assets = {
    
@@ -98,8 +101,10 @@ export const assets = {
     vastrika,
     herologo,
     admin,
-    vastrikaoutlet
-    
+    vastrikaoutlet,
+    hero2,
+    hero3,
+    hero4    
 }
 
 export const products = [
