@@ -29,12 +29,14 @@ const Cart = () => {
   }, [cartItems, products]);
 
   return (
-    <div className="border-t pt-14">
-      <div className=" text-2xl mb-3">
+    <div className="max-w-6xl mx-auto px-4 py-12">
+      {/* Title Section */}
+      <div className="flex justify-center md:justify-start text-3xl font-semibold mb-8">
         <Title text1={"YOUR"} text2={"CART"} />
       </div>
 
-      <div>
+    
+      <div className="flex flex-col gap-4">
         {cartData.map((item, index) => {
           const productData = products.find(
             (product) => product._id === item._id
@@ -43,66 +45,76 @@ const Cart = () => {
           return (
             <div
               key={index}
-              className="py-4 border-t border-b text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4"
+              className="flex flex-col md:flex-row items-center justify-between bg-white shadow-sm border border-gray-100 rounded-xl p-3 md:p-4 transition-all hover:shadow-md"
             >
-              <div className=" flex items-start gap-6">
+            
+              <div className="flex items-center gap-4 w-full md:w-auto">
+                {/* Image ka size chota kiya yaha */}
                 <img
-                  className="w-16 sm:w-20"
+                  className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-lg shadow-sm border border-gray-50"
                   src={productData.image[0]}
-                  alt=""
+                  alt={productData.name}
                 />
-                <div>
-                  <p className="text-xs sm:text-lg font-medium">
+                <div className="flex flex-col">
+                  <h3 className="text-base md:text-lg font-medium text-gray-800 mb-1">
                     {productData.name}
-                  </p>
-                  <div className="flex items-center gap-5 mt-2">
-                    <p>
-                      {currency}
-                      {productData.price}
-                    </p>
-                    <p className="px-2 sm:px-3 sm:py-1 border bg-slate-50">
-                      {item.size}
-                    </p>
+                  </h3>
+                  <div className="flex items-center gap-3">
+                    <span className="text-base font-bold text-gray-900">
+                      {currency}{productData.price}
+                    </span>
+                    <span className="px-3 py-0.5 bg-gray-100 text-xs font-semibold tracking-wide text-gray-600 rounded-full">
+                      Size: {item.size}
+                    </span>
                   </div>
                 </div>
               </div>
-              <input
-                onChange={(e) =>
-                  e.target.value === "" || e.target.value === "0"
-                    ? null
-                    : updateQuantity(
-                        item._id,
-                        item.size,
-                        Number(e.target.value)
-                      )
-                }
-                className="border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1"
-                type="number"
-                min={1}
-                defaultValue={item.quantity}
-              />
-              <img
-                onClick={() => updateQuantity(item._id, item.size, 0)}
-                className="w-4 mr-4 sm:w-5 cursor-pointer"
-                src={assets.bin_icon}
-                alt=""
-              />
+
+          
+              <div className="flex items-center justify-between w-full md:w-auto gap-6 mt-4 md:mt-0 px-2 md:px-0">
+                <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden bg-gray-50">
+                  <input
+                    onChange={(e) =>
+                      e.target.value === "" || e.target.value === "0"
+                        ? null
+                        : updateQuantity(
+                            item._id,
+                            item.size,
+                            Number(e.target.value)
+                          )
+                    }
+                    className="w-14 px-1 py-1 md:py-1.5 text-center bg-transparent focus:outline-none font-medium text-gray-700 text-sm"
+                    type="number"
+                    min={1}
+                    defaultValue={item.quantity}
+                  />
+                </div>
+                
+                <button 
+                  onClick={() => updateQuantity(item._id, item.size, 0)}
+                  className="p-2 hover:bg-red-50 rounded-full transition-colors group"
+                >
+                  <img
+                    className="w-4 md:w-5 cursor-pointer opacity-60 group-hover:opacity-100 transition-opacity"
+                    src={assets.bin_icon}
+                    alt="Remove"
+                  />
+                </button>
+              </div>
             </div>
           );
         })}
       </div>
 
-      <div className="flex justify-end my-20">
-        <div className="w-full sm:w-[450px]">
+      <div className="mt-10 flex justify-center md:justify-end">
+        <div className="w-full md:w-1/2 lg:w-[400px] bg-slate-50 p-6 rounded-xl shadow-inner border border-gray-200">
           <CartTotal />
-          <div className=" w-full text-end">
-            <button
-              onClick={() => navigate("/place-order")}
-              className="bg-black text-white text-sm my-8 px-8 py-3"
-            >
-              PROCEED TO CHECKOUT
-            </button>
-          </div>
+          <button
+            onClick={() => navigate("/place-order")}
+            className="w-full mt-6 bg-black hover:bg-gray-800 text-white font-medium text-sm tracking-widest py-3 rounded-lg transition-all shadow-md hover:shadow-lg"
+          >
+            PROCEED TO CHECKOUT
+          </button>
         </div>
       </div>
     </div>
